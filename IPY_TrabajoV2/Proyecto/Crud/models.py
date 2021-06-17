@@ -41,4 +41,20 @@ class Conductor(models.Model):
     def __str__(self):
         return self.nombre
 
+class Venta(models.Model):
+    nombre_cliente = models.CharField(max_length = 100,default = 'NOMBRE COMPLETO')
+    rut_cliente = models.CharField(max_length = 11, default = 'RUT')
+    direccion = models.CharField(max_length = 100, default = 'DIRECCION')
+    nro_venta = models.CharField(max_length = 11, default = 'NUMERO VENTA')
+    tipo_venta = models.CharField(max_length = 100, default = 'TIPO VENTA')
 
+    def __str__(self):
+        return self.nombre_cliente
+    
+class Despacho(models.Model):
+    nro_despacho = models.CharField(max_length = 5, default='NUMERO DESPACHO')
+    venta = models.ForeignKey('Venta', on_delete=models.SET_NULL,null=True)
+    conductor = models.ForeignKey('Conductor', on_delete=models.SET_NULL,null=True)
+
+    def __str__(self):
+        return self.nro_despacho

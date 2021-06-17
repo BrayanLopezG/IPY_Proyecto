@@ -3,14 +3,22 @@ from django.urls.conf import include
 from .import views
 
 urlpatterns = [
-    path('conductor/',views.ConductorLista,name="Con_lista"),
-    path('condetalle/<int:pk>/',views.ConductorDetalle,name="Con_detalle"),
-    path('concrear/',views.ConductorCrear,name="Con_crear"),
-    path('conactualizar/<int:pk>/',views.ConductorActualizar,name="Con_actualizar"),
-    path('coneliminar/<int:pk>/',views.ConductorEliminar,name="Con_eliminar"),
-    path('vehiculo/',views.VehiculoLista,name="Veh_lista"),
-    path('vehdetalle/<int:pk>/',views.VehiculoDetalle, name="Veh_detalle"),
-    path('vehcrear/',views.VehiculoCrear,name="Veh_crear"),
-    path('vehactualizar/<int:pk>/',views.VehiculoActualizar,name="Veh_actualizar"),
-    path('veheliminar/<int:pk>/',views.VehiculoEliminar,name="Veh_eliminar"),
+    #URL Conductor
+    path('conductor/',views.ConductorLista,name="conductor_lista"),
+    path('conductor/detalle/<int:pk>/',views.ConductorDetalle,name="conductor_detalle"),
+    path('conductor/crear/',views.ConductorCrear,name="conductor_crear"),
+    path('conductor/actualizar/<int:pk>/',views.ConductorActualizar,name="conductor_actualizar"),
+    path('conductor/eliminar/<int:pk>/',views.ConductorEliminar,name="conductor_eliminar"),
+    #URL Vehiculo
+    path('vehiculo/',views.VehiculoLista,name="vehiculo_lista"),
+    path('vehiculo/detalle/<int:pk>/',views.VehiculoDetalle, name="vehiculo_detalle"),
+    path('vehiculo/crear/',views.VehiculoCrear,name="vehiculo_crear"),
+    path('vehiculo/actualizar/<int:pk>/',views.VehiculoActualizar,name="vehiculo_actualizar"),
+    path('vehiculo/eliminar/<int:pk>/',views.VehiculoEliminar,name="vehiculo_eliminar"),
+    #URL Venta
+    path('venta/',views.VentaLista,name="venta_lista"),
+    path('venta/detalle/<int:pk>/',views.VentaDetalle, name="venta_detalle"),
+    path('venta/crear/',views.VentaCrear,name="venta_crear"),
+    path('venta/actualizar/<int:pk>/',views.VentaActualizar,name="venta_actualizar"),
+    path('venta/eliminar/<int:pk>/',views.VentaEliminar,name="venta_eliminar"),
 ]

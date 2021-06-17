@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import serializers
 from rest_framework.response import Response
-from .models import Conductor,Vehiculo
-from .serializers import ConductorSerializers,VehiculoSerializers
+from .models import Conductor,Vehiculo,Venta
+from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers
 from rest_framework.decorators import api_view
 
 # Create your views here.
@@ -99,3 +99,48 @@ def VehiculoEliminar(request,pk):
 
     return Response('Eliminado')
 
+#Venta
+@api_view(['GET'])
+
+def VentaLista(request):
+    venta = Venta.objects.all()
+    serializer = VentaSerializers(venta, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+
+def VentaDetalle(request,pk):
+    venta = Venta.objects.get(id=pk)
+    serializer = VentaSerializers(venta,many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def VentaActualizar(request,pk):
+    venta = Venta.objects.get(id=pk)
+    serializer = VentaSerializers(instance=venta, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def VentaCrear(request):
+    serializer = VentaSerializers(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+
+def VentaEliminar(request,pk):
+    venta = Venta.objects.get(id=pk)
+    venta.delete()
+
+    return Response('Eliminado')

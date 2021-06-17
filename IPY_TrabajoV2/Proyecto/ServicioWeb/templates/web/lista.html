@@ -48,6 +48,9 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% if user.is_authenticated %}{% if user.is_staff %}
+                    <a href="" class="btn btn-primary">Agregar Conductor</a>
+                    {% endif %}{% endif %}
                 </div>
             </div>
             <div id="menu1" class="container tab-pane fade"><br>
@@ -78,6 +81,9 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% if user.is_authenticated %}{% if user.is_staff %}
+                    <a href="" class="btn btn-primary">Agregar Vehiculo</a>
+                    {% endif %}{% endif %}
                 </div>
             </div>
         </div>
