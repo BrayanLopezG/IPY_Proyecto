@@ -1,8 +1,51 @@
 {% extends "base_generic.html" %}
 {% block content %}
+{% load static %}
+{% block extra_css %}
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
 <div class="container-fluid">
     <div class="container">
-        <h1>Tomar datos de venta y llevarlo a nuestra base de datos vinculandola con un coductor</h1>
+        <h1>Ventas</h1>
+        <div class="table">
+            <table id="venta" class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Numero Venta</th>
+                        <th>Tipo Venta</th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Fecha Compra</th>
+                        <th>Estado Compra</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: justify;">
+                    {% for venta in venta %}
+                    <tr>
+                        <td>{{ venta.id }}</td>
+                        <td>{{ venta.nro_venta }}</td>
+                        <td>{{ venta.tipo_venta}}</td>
+                        <td>{{ venta.nombre_cliente }}</td>
+                        <td>{{ venta.fecha_compra }}</td>
+                        <td>{{ venta.estado_compra }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}
+{% block extra_script %}
+<script>
+    $(document).ready(function () {
+        $('#venta').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            }
+            
+        });
+    });
+</script>
+{% endblock extra_script %}

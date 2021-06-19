@@ -34,22 +34,27 @@
                             </tr>
                         </thead>
                         <tbody style="text-align: justify;">
-                            {% for Conductor in conductor %}
+                            {% for conductor in conductor %}
                             <tr>
-                                <td>{{ Conductor.id }}</td>
-                                <td>{{ Conductor.nombre }}</td>
-                                <td>{{ Conductor.apellido }}</td>
-                                <td>{{ Conductor.fono }}</td>
-                                <td>{{ Conductor.vehiculo}}</td>
-                                <td>{{ Conductor.estado }}</td>
-                                <td><i class="bi bi-eye"></i> <i class="bi bi-pencil"></i> <i class="bi bi-trash"></i>
+                                <td>{{ conductor.id }}</td>
+                                <td>{{ conductor.nombre }}</td>
+                                <td>{{ conductor.apellido }}</td>
+                                <td>{{ conductor.fono }}</td>
+                                <td>{{ conductor.vehiculo}}</td>
+                                {% if conductor.estado == 1 %}
+                                <td>Disponible</td>
+                                {% endif %}
+                                <td>
+                                    <a href="{% url 'ServicioWeb:update_conductor' conductor.id %}"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{% url 'ServicioWeb:eliminar_conductor' conductor.id %}"><i class="bi bi-file-x-fill"></i></a>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                     {% if user.is_authenticated %}{% if user.is_staff %}
-                    <a href="" class="btn btn-primary">Agregar Conductor</a>
+                    <a href="{%url 'ServicioWeb:crear_vehiculo'%}" class="btn btn-primary">Agregar Vehiculo</a>
+                    <a href="{%url 'ServicioWeb:crear_conductor'%}" class="btn btn-primary">Agregar Conductor</a>
                     {% endif %}{% endif %}
                 </div>
             </div>
@@ -75,15 +80,10 @@
                                 <td>{{ Vehiculo.marca }}</td>
                                 <td>{{ Vehiculo.modelo}}</td>
                                 <td>{{ Vehiculo.color}}</td>
-                                <td><i class="bi bi-eye"></i> <i class="bi bi-pencil"></i> <i class="bi bi-trash"></i>
-                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% if user.is_authenticated %}{% if user.is_staff %}
-                    <a href="" class="btn btn-primary">Agregar Vehiculo</a>
-                    {% endif %}{% endif %}
                 </div>
             </div>
         </div>

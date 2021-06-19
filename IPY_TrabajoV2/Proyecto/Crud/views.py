@@ -1,11 +1,25 @@
 from django.shortcuts import render
-from rest_framework import serializers
+from rest_framework import serializers,viewsets
 from rest_framework.response import Response
 from .models import Conductor,Vehiculo,Venta
 from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers
 from rest_framework.decorators import api_view
 
 # Create your views here.
+
+class ConductorViewSet(viewsets.ModelViewSet):
+    queryset = Conductor.objects.all()
+    serializer_class = ConductorSerializers
+
+class VehiculoViewSet(viewsets.ModelViewSet):
+    queryset = Vehiculo.objects.all()
+    serializer_class = VehiculoSerializers
+
+class VentaViewSet(viewsets.ModelViewSet):
+    queryset = Venta.objects.all()
+    serializer_class = VentaSerializers
+
+#Conductor
 
 @api_view(['GET'])
 

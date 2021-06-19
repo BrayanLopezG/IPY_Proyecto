@@ -16,12 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
+from rest_framework import routers
+from Crud import views
 from django.conf.urls.static import static
+
+router = routers.DefaultRouter()
+router.register(r'conductor',views.ConductorViewSet)
+router.register(r'vehiculo',views.VehiculoViewSet)
+router.register(r'venta',views.VentaViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('gestion/',include('Crud.urls')),
-    path('',include('ServicioWeb.urls')),  
+    path('',include('ServicioWeb.urls')), 
+    path('administracion/api/', include(router.urls)), 
 ]
 
 urlpatterns += [

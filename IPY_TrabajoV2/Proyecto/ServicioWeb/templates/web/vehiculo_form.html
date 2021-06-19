@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<body>
+    <body>
+        <div class="row">
+            <form method="post" action="" id="formulario">
+                {% csrf_token %}
+                <div class="form_group">
+                    <table>{{ form.as_table }}
+                    </table>
+                </div>
+                <input type="submit" class="btn btn-danger" id="enviar" value="Guardar">
+                <input type="reset" class="btn btn-primary" id="limnpiar" value="Limpiar">
+                <a href="{%url 'ServicioWeb:lista'%}" class="btn btn-info" role="button">Atrás</a>
+                <div id="error" class="alert alert-success" role="alert">{{ mensaje }}
+                </div>
+            </form>
+        </div>
+    </body>
+</body>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 class Vehiculo(models.Model):
@@ -21,7 +22,7 @@ class Estado(models.Model):
 
     class Meta:
         db_table = 'Estado'
-    
+   
     def __str__(self):
         return self.descripcion
 
@@ -32,8 +33,8 @@ class Conductor(models.Model):
     fono = models.CharField(max_length=100, default='FONO')
     crearted_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    vehiculo = models.ForeignKey('Vehiculo', on_delete=models.SET_NULL,null=True)
-    estado = models.ForeignKey('Estado', on_delete=models.SET_NULL,null=True)
+    vehiculo = models.ForeignKey(Vehiculo, on_delete=models.SET_NULL,null=True)
+    estado = models.ForeignKey(Estado, on_delete=models.SET_NULL,null=True)
 
     class Meta:
         db_table = 'Conductor'
@@ -41,12 +42,17 @@ class Conductor(models.Model):
     def __str__(self):
         return self.nombre
 
+class EstadoCompra(models.Model):
+    descripcion = models.CharField(max_length=100, default='ESTADO')
+
 class Venta(models.Model):
     nombre_cliente = models.CharField(max_length = 100,default = 'NOMBRE COMPLETO')
     rut_cliente = models.CharField(max_length = 11, default = 'RUT')
     direccion = models.CharField(max_length = 100, default = 'DIRECCION')
     nro_venta = models.CharField(max_length = 11, default = 'NUMERO VENTA')
+    fecha_compra = models.DateField(auto_now=True)
     tipo_venta = models.CharField(max_length = 100, default = 'TIPO VENTA')
+    estado_compra = models.ForeignKey(EstadoCompra,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         return self.nombre_cliente
