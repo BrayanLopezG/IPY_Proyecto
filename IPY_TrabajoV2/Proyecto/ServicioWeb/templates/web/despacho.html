@@ -1,8 +1,46 @@
 {% extends "base_generic.html" %}
+{% block title %}
+<title>{{titulo}}</title>
+{% endblock title%}
 {% block content %}
 <div class="container-fluid">
     <div class="container">
-        <h1>Tomar datos de Despacho sobre el producto y datos del conductor</h1>
+        <div class="container">
+            <h1>Despacho</h1>
+            <div class="table">
+                <table id="despacho" class="table table-sm table-dark">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Numero Despacho</th>
+                            <th>Venta</th>
+                            <th>Conductor</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: justify;">
+                        {% for despacho in despacho %}
+                        <tr>
+                            <td>{{ despacho.id }}</td>
+                            <td>{{ despacho.nro_despacho }}</td>
+                            <td>{{ despacho.venta }}</td>
+                            <td>{{ despacho.conductor }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
+    {% block extra_script %}
+    <script>
+        $(document).ready(function () {
+            $('#despacho').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                }
+                
+            });
+        });
+    </script>
+    {% endblock extra_script %}

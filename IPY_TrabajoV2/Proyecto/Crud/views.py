@@ -1,8 +1,9 @@
+from ServicioWeb.views import despacho
 from django.shortcuts import render
 from rest_framework import serializers,viewsets
 from rest_framework.response import Response
-from .models import Conductor,Vehiculo,Venta
-from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers
+from .models import Conductor,Vehiculo,Venta,Despacho
+from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers,DespachoSerializers
 from rest_framework.decorators import api_view
 
 # Create your views here.
@@ -18,6 +19,10 @@ class VehiculoViewSet(viewsets.ModelViewSet):
 class VentaViewSet(viewsets.ModelViewSet):
     queryset = Venta.objects.all()
     serializer_class = VentaSerializers
+
+class DespachoViewSet(viewsets.ModelViewSet):
+    queryset = Despacho.objects.all()
+    serializer_class = DespachoSerializers
 
 #Conductor
 
@@ -156,5 +161,51 @@ def VentaCrear(request):
 def VentaEliminar(request,pk):
     venta = Venta.objects.get(id=pk)
     venta.delete()
+
+    return Response('Eliminado')
+
+#Despacho
+@api_view(['GET'])
+
+def DespachoLista(request):
+    despacho = Despacho.objects.all()
+    serializer = DespachoSerializers(despacho, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+
+def DespachoDetalle(request,pk):
+    despacho = Despacho.objects.get(id=pk)
+    serializer = DespachoSerializers(despacho,many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def DespachoActualizar(request,pk):
+    despacho = Despacho.objects.get(id=pk)
+    serializer = DespachoSerializers(instance=despacho, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def DespachoCrear(request):
+    serializer = DespachoSerializers(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+
+def DespachoEliminar(request,pk):
+    despacho = Despacho.objects.get(id=pk)
+    despacho.delete()
 
     return Response('Eliminado')

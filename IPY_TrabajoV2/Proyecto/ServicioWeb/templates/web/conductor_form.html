@@ -1,4 +1,7 @@
 {% extends "base_generic.html" %}
+{% block title %}
+<title>{{titulo}} - Crear</title>
+{% endblock title%}
 {% block content %}
 <body>
     <body>
@@ -9,10 +12,10 @@
                     <table>{{ form.as_table }}
                     </table>
                 </div>
-                <input type="submit" class="btn btn-danger" id="enviar" value="Guardar" a href="{%url 'ServicioWeb:lista'%}" >
+                <input type="submit" class="btn btn-danger" id="enviar" value="Guardar">
                 <input type="reset" class="btn btn-primary" id="limnpiar" value="Limpiar">
-                <div id="error" class="alert alert-success" role="alert">{{ mensaje }}</div>
                 <a href="{%url 'ServicioWeb:lista'%}" class="btn btn-info" role="button">Atrás</a>
+                <div id="error" class="alert alert-success" role="alert">{{ mensaje }}</div>
             </form>
         </div>
     </body>

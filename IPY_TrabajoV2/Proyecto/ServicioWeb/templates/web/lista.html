@@ -25,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Rut</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Fono</th>
@@ -37,12 +38,17 @@
                             {% for conductor in conductor %}
                             <tr>
                                 <td>{{ conductor.id }}</td>
+                                <td>{{ conductor.rut }}</td>
                                 <td>{{ conductor.nombre }}</td>
                                 <td>{{ conductor.apellido }}</td>
                                 <td>{{ conductor.fono }}</td>
                                 <td>{{ conductor.vehiculo}}</td>
                                 {% if conductor.estado == 1 %}
                                 <td>Disponible</td>
+                                {% elif conductor.estado == 2 %}
+                                <td>Ocupado</td>
+                                {% else  %}
+                                <td>En Ruta</td>
                                 {% endif %}
                                 <td>
                                     <a href="{% url 'ServicioWeb:update_conductor' conductor.id %}"><i class="bi bi-pencil-square"></i></a>
@@ -69,7 +75,6 @@
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Color</th>
-                                <th>Administracion</th>
                             </tr>
                         </thead>
                         <tbody style="text-align: justify;">

@@ -40,10 +40,13 @@ class Conductor(models.Model):
         db_table = 'Conductor'
 
     def __str__(self):
-        return self.nombre
+        return self.rut
 
 class EstadoCompra(models.Model):
     descripcion = models.CharField(max_length=100, default='ESTADO')
+
+    def __str__(self):
+        return self.descripcion
 
 class Venta(models.Model):
     nombre_cliente = models.CharField(max_length = 100,default = 'NOMBRE COMPLETO')
@@ -55,7 +58,7 @@ class Venta(models.Model):
     estado_compra = models.ForeignKey(EstadoCompra,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
-        return self.nombre_cliente
+        return self.nro_venta
     
 class Despacho(models.Model):
     nro_despacho = models.CharField(max_length = 5, default='NUMERO DESPACHO')

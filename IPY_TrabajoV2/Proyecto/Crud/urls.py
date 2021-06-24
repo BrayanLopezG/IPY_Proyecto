@@ -21,4 +21,10 @@ urlpatterns = [
     path('venta/crear/',views.VentaCrear,name="venta_crear"),
     path('venta/actualizar/<int:pk>/',views.VentaActualizar,name="venta_actualizar"),
     path('venta/eliminar/<int:pk>/',views.VentaEliminar,name="venta_eliminar"),
+    #URL Despacho
+    path('despacho/',views.DespachoLista,name="despacho_lista"),
+    path('despacho/detalle/<int:pk>/',views.DespachoDetalle, name="despacho_detalle"),
+    path('despacho/crear/',views.DespachoCrear,name="despacho_crear"),
+    path('despacho/actualizar/<int:pk>/',views.DespachoActualizar,name="despacho_actualizar"),
+    path('despacho/eliminar/<int:pk>/',views.DespachoEliminar,name="despacho_eliminar"),
 ]

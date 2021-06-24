@@ -1,4 +1,9 @@
 {% extends "base_generic.html" %}
+
+{% block title %}
+<title>{{titulo}}</title>
+{% endblock title%}
+
 {% block content %}
 {% load static %}
 {% block extra_css %}
@@ -24,11 +29,21 @@
                     {% for venta in venta %}
                     <tr>
                         <td>{{ venta.id }}</td>
-                        <td>{{ venta.nro_venta }}</td>
+                        <td><a href="{% url 'ServicioWeb:crear_despacho' %}">{{ venta.nro_venta }}</a></td>
                         <td>{{ venta.tipo_venta}}</td>
                         <td>{{ venta.nombre_cliente }}</td>
+                        <td>{{ venta.direccion }}</td>
                         <td>{{ venta.fecha_compra }}</td>
-                        <td>{{ venta.estado_compra }}</td>
+                        {% if venta.estado_compra == 1 %}
+                        <td>En Espera</td>
+                        {% elif venta.estado_compra == 2 %}
+                        <td>Ruta</td>
+                        {% elif venta.estado_compra == 3 %}
+                        <td>Procesado</td>
+                        {% else  %}
+                        <td>Concluido</td>
+                        {% endif %}
+
                     </tr>
                     {% endfor %}
                 </tbody>

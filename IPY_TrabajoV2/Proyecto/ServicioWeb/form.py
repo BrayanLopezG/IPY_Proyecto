@@ -1,8 +1,6 @@
-from django.forms import widgets
-from django.forms.widgets import TextInput, Widget
 from django import forms
 from django.forms import ModelForm
-from Crud.models import Conductor,Vehiculo,Estado
+from Crud.models import Conductor,Vehiculo,Despacho,Venta
 
 class ConductorForm(ModelForm):
     class Meta:
@@ -13,3 +11,13 @@ class VehiculoForm(ModelForm):
     class Meta:
         model = Vehiculo
         fields = ['patente','marca','modelo','color']
+    
+class DespachoForm(ModelForm):
+    class Meta:
+        model = Despacho
+        fields = ['nro_despacho','venta','conductor']
+
+class VentaForm(ModelForm):
+    class Meta:
+        model = Venta
+        fields = ['estado_compra']
