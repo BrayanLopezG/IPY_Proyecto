@@ -23,13 +23,14 @@
                         <th>Direccion</th>
                         <th>Fecha Compra</th>
                         <th>Estado Compra</th>
+                        <th>Administracion</th>
                     </tr>
                 </thead>
                 <tbody style="text-align: justify;">
                     {% for venta in venta %}
                     <tr>
                         <td>{{ venta.id }}</td>
-                        <td><a href="{% url 'ServicioWeb:crear_despacho' %}">{{ venta.nro_venta }}</a></td>
+                        <td>{{ venta.nro_venta }}</td>
                         <td>{{ venta.tipo_venta}}</td>
                         <td>{{ venta.nombre_cliente }}</td>
                         <td>{{ venta.direccion }}</td>
@@ -43,7 +44,10 @@
                         {% else  %}
                         <td>Concluido</td>
                         {% endif %}
-
+                        <td>
+                            {% csrf_token %}
+                            <a href="{% url 'ServicioWeb:procesar' venta.id %}">Procesar</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

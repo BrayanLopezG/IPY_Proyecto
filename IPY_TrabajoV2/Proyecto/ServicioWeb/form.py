@@ -21,3 +21,8 @@ class VentaForm(ModelForm):
     class Meta:
         model = Venta
         fields = ['estado_compra']
+
+class AsignarConductorForm(ModelForm):
+    class Meta:
+        model = Conductor
+        fields = ['estado']

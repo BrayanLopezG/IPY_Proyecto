@@ -1,6 +1,5 @@
-from ServicioWeb.views import despacho
 from rest_framework import serializers
-from .models import Conductor,Vehiculo,Venta,Despacho
+from .models import Conductor,Vehiculo,Venta,Postventa,Despacho
 
 class ConductorSerializers(serializers.ModelSerializer):
     class Meta:
@@ -20,4 +19,9 @@ class VentaSerializers(serializers.ModelSerializer):
 class DespachoSerializers(serializers.ModelSerializer):
     class Meta:
         model = Despacho
+        fields = '__all__'
+    
+class PostventaSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Postventa
         fields = '__all__'

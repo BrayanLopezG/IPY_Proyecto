@@ -1,9 +1,8 @@
-from ServicioWeb.views import despacho
 from django.shortcuts import render
 from rest_framework import serializers,viewsets
 from rest_framework.response import Response
-from .models import Conductor,Vehiculo,Venta,Despacho
-from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers,DespachoSerializers
+from .models import Conductor,Vehiculo,Venta,Postventa,Despacho
+from .serializers import ConductorSerializers,VehiculoSerializers,VentaSerializers,PostventaSerializers,DespachoSerializers
 from rest_framework.decorators import api_view
 
 # Create your views here.
@@ -164,7 +163,44 @@ def VentaEliminar(request,pk):
 
     return Response('Eliminado')
 
+# Postventa
+@api_view(['GET'])
+
+def Postventa_lista(request):
+    postventa = Postventa.objects.all()
+    serializer = PostventaSerializers(postventa, many = True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def Postventa_crear(request):
+    serializer = PostventaSerializers(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+
+def Postventa_actualizar(request, pk):
+    postventa = Postventa.objects.get(id=pk)
+    serializer = PostventaSerializers(instace=postventa, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+
+def Postventa_eliminar(request,pk):
+    postventa = Postventa.objects.get(id=pk)
+    postventa.delete()
+    return Response('Eliminado')
+
 #Despacho
+
 @api_view(['GET'])
 
 def DespachoLista(request):

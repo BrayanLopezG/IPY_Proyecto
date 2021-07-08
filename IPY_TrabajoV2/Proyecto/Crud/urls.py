@@ -27,4 +27,9 @@ urlpatterns = [
     path('despacho/crear/',views.DespachoCrear,name="despacho_crear"),
     path('despacho/actualizar/<int:pk>/',views.DespachoActualizar,name="despacho_actualizar"),
     path('despacho/eliminar/<int:pk>/',views.DespachoEliminar,name="despacho_eliminar"),
+    # URL Postventa
+    path('postventa/',views.Postventa_lista, name = "postventa_lista"),
+    path('postventa/crear/', views.Postventa_crear, name = "postventa_crear"),
+    path('postventa/actualizar/<int:pk>/', views.Postventa_actualizar, name = "postventa_actualizar"),
+    path('postventa/eliminar/<int:pk>/',views.Postventa_eliminar, name = "postventa_eliminar"),
 ]

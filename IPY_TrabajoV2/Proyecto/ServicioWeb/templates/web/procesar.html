@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+{% load static %}
+{% block content %}
+<h1>Desea continuar?</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div id="formularios">
+        {{ form1.venta }}
+        {{ form2.as_p }}
+        {{ form3.as_p }}
+    </div>
+    <div>
+        {{ form1.nro_despacho }}
+        {{ form1.conductor }}
+    </div>
+    <h2>Usted va a procesar la venta {{ idventa }}</h2>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+<script>
+var x = document.getElementById("formularios");
+x.style.display = "none";
+</script>
+
+{% endblock %}

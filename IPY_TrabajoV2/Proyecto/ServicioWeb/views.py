@@ -6,9 +6,9 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from django.contrib import messages
-from .form import ConductorForm, VehiculoForm, DespachoForm, VentaForm
-from django.views.generic import ListView
-from Crud.models import Conductor,Venta,Despacho
+from .form import ConductorForm, VehiculoForm, DespachoForm, VentaForm,AsignarConductorForm
+from Crud.models import Conductor,Venta,Postventa,Despacho
+from django.views import View
 
 
 # Create your views here.
@@ -22,13 +22,17 @@ def localizacion(request):
     context = {'titulo': 'Localizacion'}
     return render(request, "web/localizacion.html", context)
 
+def postventa_lista(request):
+    postventa = requests.get('http://127.0.0.1:8000/gestion/postventa/').json()
+    context = {'postventa':postventa,'titulo':'Postventa'}
+    return render(request,"web/postventa.hmtl",context)
+
 def despacho(request):
     despacho = requests.get('http://127.0.0.1:8000/gestion/despacho/').json()
     context = {'despacho':despacho,'titulo': 'Despacho'}
     return render(request, "web/despacho.html", context)
-
+    
 # Listar
-
 
 def lista_general(request):
     conductor = requests.get('http://127.0.0.1:8000/administracion/api/conductor/').json()
@@ -45,8 +49,7 @@ def venta_lista(request):
 
 # Crear
 
-
-def crear_conductor(request, pk):
+def crear_conductor(request):
     datos = {'form': ConductorForm()}
     if request.method == 'POST':
         form = ConductorForm(request.POST)
@@ -59,7 +62,6 @@ def crear_conductor(request, pk):
         form = ConductorForm()
     context = {'form': form, 'datos': datos, 'titulo': 'Conductor'}
     return render(request, 'web/conductor_form.html', context)
-
 
 def crear_vehiculo(request):
     datos = {'form': VehiculoForm()}
@@ -74,6 +76,36 @@ def crear_vehiculo(request):
         form = VehiculoForm()
     context = {'form': form, 'datos': datos}
     return render(request, 'web/vehiculo_form.html', context)
+
+def procesar(request,pk):
+    idventa = pk
+    venta = Venta.objects.get(id=idventa)
+    conductor = Conductor.objects.get(id=idventa)
+    initial_compra = {
+        'estado_compra' : 3
+    }
+    initial_conductor = {
+        'estado': 2
+    }
+    initial_data = {
+        'venta': idventa
+    }
+    if request.method == 'POST':
+        form1 = DespachoForm(request.POST, prefix="form1")
+        form2 = VentaForm(request.POST, instance=venta, prefix="form2")
+        form3 = AsignarConductorForm(request.POST, instance=conductor, prefix="form3")
+        if form1.is_valid() or form2.is_valid() or form3.is_valid():
+            form1.save()
+            form2.save()
+            form3.save()
+            return redirect('ServicioWeb:despacho')
+    else:
+        form1 = DespachoForm(initial=initial_data, prefix="form1")
+        form2 = VentaForm(instance=venta, prefix="form2", initial=initial_compra)
+        form3 = AsignarConductorForm(instance=conductor, prefix="form3", initial=initial_conductor)
+    context = {'form1':form1,'form2':form2,'form3': form3 , 'idventa':idventa}
+    return render(request, 'web/procesar.html', context)
+
 
 def crear_despacho(request):
     datos = {'form': DespachoForm}
@@ -90,16 +122,6 @@ def crear_despacho(request):
 
 # Actualizar
 
-def actualizar_venta(request, pk):
-    venta = Venta.objects.get(id=pk)
-    info = {'form': VentaForm(instance=venta)}
-    if request.method == 'POST':
-        info = VentaForm(data=request.POST, instance=venta)
-        if info.is_valid():
-            info.save()
-            info['mensaje'] = 'Guardado Correctamente'
-    return render(request,'web/despacho_form.html',info)
-
 def actualizar_conductor(request,pk):
     conductor = Conductor.objects.get(id=pk)
     datos = {'form':ConductorForm(instance=conductor)}
@@ -115,10 +137,7 @@ def actualizar_conductor(request,pk):
 def eliminar_conductor(request,pk):
     conductor = Conductor.objects.get(id=pk)
     conductor.delete()
-    conductor = requests.get('http://127.0.0.1:8000/administracion/api/conductor/').json()
-    vehiculo = requests.get('http://127.0.0.1:8000/administracion/api/vehiculo/').json()
-    context = {'conductor':conductor,'vehiculo':vehiculo}
-    return render(request,"web/lista.html",context)
+    return redirect('ServicioWeb:lista_general')
 
 def loginpage(request):
 	if request.user.is_authenticated:

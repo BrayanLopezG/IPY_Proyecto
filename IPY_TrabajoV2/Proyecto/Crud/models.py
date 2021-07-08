@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
+import geocoder
+
+token = 'pk.eyJ1IjoiYnJheWFubG1sIiwiYSI6ImNrcXNyOWl1YTA1YzQydXNiNXlwdWZsb2UifQ.pA4JkLi_o-OsuuG6ePvPdw'
 
 # Create your models here.
 class Vehiculo(models.Model):
@@ -67,3 +70,27 @@ class Despacho(models.Model):
 
     def __str__(self):
         return self.nro_despacho
+
+class Postventa(models.Model):
+    cliente = models.CharField(max_length = 100,default = 'NOMBRE COMPLETO')
+    rut = models.CharField(max_length = 11, default = 'RUT')
+    direccion = models.CharField(max_length = 100, default = 'DIRECCION')
+    postventa = models.CharField(max_length = 11, default = 'NUMERO POSTVENTA')
+    tipo_postventa = models.CharField(max_length = 100, default = 'TIPO POSTVENTA')
+    estado_compra = models.ForeignKey(EstadoCompra,on_delete=models.SET_NULL,null=True)
+    conductor = models.ForeignKey(Conductor,on_delete=models.SET_NULL,null=True)
+    
+    def __str__(self):
+        return self.rut
+
+class Direccion(models.Model):
+    direccion = models.CharField(max_length=200)
+    lat = models.FloatField(blank=True, null=True)
+    long = models.FloatField(blank=True, null=True)
+
+    def save(self, *arg,**kwargs):
+        g = geocoder.mapbox(self.direccion, key=token)
+        g = g.latlng
+        self.lat = g[0]
+        self.long = g[1]
+        return super(Direccion,self).save(*arg,**kwargs)
