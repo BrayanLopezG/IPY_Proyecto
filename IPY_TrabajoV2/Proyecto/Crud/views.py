@@ -23,6 +23,10 @@ class DespachoViewSet(viewsets.ModelViewSet):
     queryset = Despacho.objects.all()
     serializer_class = DespachoSerializers
 
+class PostventaViewSet(viewsets.ModelViewSet):
+    queryset = Postventa.objects.all()
+    serializer_class = PostventaSerializers
+
 #Conductor
 
 @api_view(['GET'])

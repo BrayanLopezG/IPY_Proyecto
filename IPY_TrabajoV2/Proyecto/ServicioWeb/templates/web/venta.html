@@ -46,7 +46,7 @@
                         {% endif %}
                         <td>
                             {% csrf_token %}
-                            <a href="{% url 'ServicioWeb:procesar' venta.id %}">Procesar</a>
+                            <a href="{% url 'ServicioWeb:procesar' venta.id %}" class="btn btn-primary">Procesar</a>
                         </td>
                     </tr>
                     {% endfor %}

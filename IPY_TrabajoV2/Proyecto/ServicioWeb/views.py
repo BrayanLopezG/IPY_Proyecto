@@ -5,7 +5,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from django.contrib import messages
-from .form import ConductorForm, VehiculoForm, DespachoForm, VentaForm,DireccionForm
+from .form import AsignarConductorForm, ConductorForm, VehiculoForm, DespachoForm, VentaForm,DireccionForm
 from Crud.models import Conductor,Venta,Postventa,Despacho,Direccion
 
 # Create your views here.
@@ -120,14 +120,20 @@ def creardireccion(request,pk):
     initial_direccion = {
         'direccion':direccion
     }
+    initial_conductor = {
+        'estado': 2
+    }
     form = DireccionForm(request.POST,prefix = "form")
-    if form.is_valid(): 
+    form1 = AsignarConductorForm(request.POST, instance = conductor, prefix = "form1")
+    if form.is_valid() or form1.is_valid(): 
         form.save()
+        form1.save()
         return redirect('ServicioWeb:localizacion')
     else:
+        form1 = AsignarConductorForm(instance = conductor, prefix = "form1", initial = initial_conductor)
         form = DireccionForm(initial=initial_direccion, prefix="form")
-    context = {'form':form, 'direccion': direccion, 'venta':venta, 'conductor':conductor}
-    return render(request,'web/prueba.html', context)
+    context = {'form':form, 'form1': form1,'direccion': direccion, 'venta':venta, 'conductor':conductor}
+    return render(request,'web/direccion_form.html', context)
 
 # Actualizar
 
