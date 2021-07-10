@@ -43,6 +43,11 @@
             {% else %}
             <a class="" href="{% url 'ServicioWeb:ventas' %}">Ventas</a>
             {% endif %}
+            {% if titulo == 'Postventa' %}
+            <a class="active" href="{% url 'ServicioWeb:postventa' %}">Postventa</a>
+            {% else %}
+            <a class="" href="{% url 'ServicioWeb:postventa' %}">Postventa</a>
+            {% endif %}
             {% if titulo == 'Localizacion' %}
             <a class="active" href="{% url 'ServicioWeb:localizacion' %}">Localizacion</a>
             {% else %}

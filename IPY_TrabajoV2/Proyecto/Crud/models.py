@@ -85,8 +85,8 @@ class Postventa(models.Model):
 
 class Direccion(models.Model):
     direccion = models.CharField(max_length=200)
-    lat = models.FloatField(blank=True, null=True)
-    long = models.FloatField(blank=True, null=True)
+    lat = models.CharField(max_length=100, blank=True, null=True)
+    long = models.CharField(max_length=100, blank=True, null=True)
 
     def save(self, *arg,**kwargs):
         g = geocoder.mapbox(self.direccion, key=token)

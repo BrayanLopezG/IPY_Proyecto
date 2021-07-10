@@ -5,7 +5,40 @@
 {% block content %}
 <div class="container-fluid">
     <div class="container">
-        <h1>insertar Api de google maps u otro para hacer el seguimiento del producto</h1>
+        <div class="container">
+            <h1>Localizacion</h1>
+            <div class="table">
+                <table id="localizacion" class="table table-sm table-dark">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Direccion</th>
+                            <th>Localizar</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: justify;">
+                        {% for direccion in direccion %}
+                        <tr>
+                            <td>{{ direccion.id }}</td>
+                            <td>{{ direccion.direccion }}</td>
+                            <td><a href="{% url 'ServicioWeb:view_localizacion' direccion.id %}" class="btn btn-primary">Mirar localizacion</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
+    {% block extra_script %}
+    <script>
+        $(document).ready(function () {
+            $('#localizacion').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                }
+                
+            });
+        });
+    </script>
+    {% endblock extra_script %}

@@ -8,6 +8,7 @@ app_name='ServicioWeb'
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('localizacion/', views.localizacion, name = 'localizacion'),
+    path('localizacion/view/<int:pk>', views.viewlocalizacion,name = 'view_localizacion'),
     path('login/', LoginView.as_view(template_name = 'web/login.html'), name = 'login'),
     path('logout/', LogoutView.as_view(template_name = 'web/index.html'), name = 'logout'),
     path('lista/', views.lista_general, name = 'lista'),
@@ -16,6 +17,8 @@ urlpatterns = [
     path('conductor/actualizar/<int:pk>/', views.actualizar_conductor, name = 'update_conductor'),
     path('conductor/crear/', views.crear_conductor, name = 'crear_conductor'),
     path('despacho/', views.despacho, name = 'despacho'),
-    path('despacho/crear/<int:pk>', views.procesar, name = 'procesar'),
+    path('despacho/crear/<int:pk>/', views.procesar, name = 'procesar'),
+    path('direccion/crear/<int:pk>/',views.creardireccion, name = 'crear_direccion'),
     path('venta/', views.venta_lista, name = 'ventas'),
-]
+    path('postventa/',views.postventa_lista, name = 'postventa'),
+] 

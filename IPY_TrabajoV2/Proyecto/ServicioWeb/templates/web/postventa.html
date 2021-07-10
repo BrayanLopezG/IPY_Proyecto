@@ -1,0 +1,71 @@
+{% extends "base_generic.html" %}
+
+{% block title %}
+<title>{{titulo}}</title>
+{% endblock title%}
+
+{% block content %}
+{% load static %}
+{% block extra_css %}
+<link href="{% static 'css/dataTables.bootstrap5.min.css' %}" rel="stylesheet" />
+{% endblock extra_css %}
+<div class="container-fluid">
+    <div class="container">
+        <h1>Postventas</h1>
+        <div class="table">
+            <table id="venta" class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Numero Postventa</th>
+                        <th>Tipo Postventa</th>
+                        <th>Cliente</th>
+                        <th>Rut</th>
+                        <th>Direccion</th>
+                        <th>Conductor</th>
+                        <th>Estado Compra</th>
+                        <th>Administracion</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: justify;">
+                    {% for postventa in postventa %}
+                    <tr>
+                        <td>{{ postventa.id }}</td>
+                        <td>{{ postventa.postventa }}</td>
+                        <td>{{ postventa.tipo_postventa}}</td>
+                        <td>{{ postventa.cliente }}</td>
+                        <td>{{ postventa.rut }}</td>
+                        <td>{{ postventa.direccion }}</td>
+                        <td>{{ postventa.conductor }}</td>
+                        {% if postventa.estado_compra == 1 %}
+                        <td>En Espera</td>
+                        {% elif postventa.estado_compra == 2 %}
+                        <td>Ruta</td>
+                        {% elif postventa.estado_compra == 3 %}
+                        <td>Procesado</td>
+                        {% else  %}
+                        <td>Concluido</td>
+                        {% endif %}
+                        <td>
+                            <a href="">Procesar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_script %}
+<script>
+    $(document).ready(function () {
+        $('#venta').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+            }
+            
+        });
+    });
+</script>
+{% endblock extra_script %}

@@ -1,6 +1,7 @@
 from django import forms
+from django.db.models.base import Model
 from django.forms import ModelForm
-from Crud.models import Conductor,Vehiculo,Despacho,Venta
+from Crud.models import Conductor,Vehiculo,Despacho,Venta,Direccion
 
 class ConductorForm(ModelForm):
     class Meta:
@@ -26,3 +27,8 @@ class AsignarConductorForm(ModelForm):
     class Meta:
         model = Conductor
         fields = ['estado']
+    
+class DireccionForm(ModelForm):
+    class Meta:
+        model = Direccion
+        fields = ['direccion']

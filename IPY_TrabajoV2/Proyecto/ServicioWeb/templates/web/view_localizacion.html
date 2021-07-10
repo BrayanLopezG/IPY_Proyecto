@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+{% block title %}
+<title>{{titulo}}</title>
+{% endblock title%}
+{% load static %}
+{% block extra_css %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+{% endblock extra_css %}
+{% block content %}
+<div class="container-fluid">
+    <div class="container">
+        <h1>Localizacion</h1>
+        <div id='map' style='width: 100%; height: 600px;'></div>
+        <script>
+            mapboxgl.accessToken = '{{ token }}';
+            var map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                center: [{{direccion.long}}, {{direccion.lat}}], // starting position [lng, lat]
+                zoom: 17 // starting zoom
+            });
+            var marker = new mapboxgl.Marker()
+                .setLngLat([{{direccion.long}}, {{direccion.lat}}])
+                .setPopup(new mapboxgl.Popup().setHTML("<p>{{ direccion.direccion }}</p>"))
+                .addTo(map);
+        </script>
+    </div>
+</div>
+
+<div id="Prueba">
+
+</div>
+
+<script>
+function pruebas(){
+    var datosviews = "{{data}}"
+    document.getElementById('Prueba').innerHTML = data;}
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+{% block title %}
+<title>{{titulo}}</title>
+{% endblock title%}
+{% load static %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% block content %}
+<h1>Prueba</h1>
+<h1>Desea continuar?</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div id="formularios">
+        {{ form.as_p }}
+    </div>
+    <h2>Usted va a procesar la venta {{ venta.nro_venta }}</h2>
+    <h2>Con la siguiente direccion {{ direccion }}</h2>
+    <h2>Personal a cargo de dejar el producto sera {{ conductor.nombre }} con el siguiente Rut {{ conductor.rut }}</h2>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+{% endblock %}

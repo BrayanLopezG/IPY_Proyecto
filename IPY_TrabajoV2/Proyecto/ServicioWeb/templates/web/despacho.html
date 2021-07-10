@@ -15,6 +15,7 @@
                             <th>Numero Despacho</th>
                             <th>Venta</th>
                             <th>Conductor</th>
+                            <th>Administrar</th>
                         </tr>
                     </thead>
                     <tbody style="text-align: justify;">
@@ -24,6 +25,7 @@
                             <td>{{ despacho.nro_despacho }}</td>
                             <td>{{ despacho.venta }}</td>
                             <td>{{ despacho.conductor }}</td>
+                            <td><a href="{% url 'ServicioWeb:crear_direccion' despacho.id %}">Procesar</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
